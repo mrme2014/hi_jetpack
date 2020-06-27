@@ -1,0 +1,10 @@
+@startuml
+Activity -> SavedStateRegistryController: <font color=red><b>onCreate(Bundle savedState)\n页面新建时派发给SavedStateRegistryController
+activate Activity
+SavedStateRegistryController --> SavedStateRegistry: <font color=red><b>performRestore(Bundle savedState)\n直接转发给SavedStateRegistry
+deactivate Activity
+activate SavedStateRegistryController
+SavedStateRegistry->SavedStateRegistry:<font color=red><b>performRestore(Bundle savedState)\n 得到当前页面存储的数据bundle集合
+deactivate SavedStateRegistryController
+activate SavedStateRegistry
+@enduml

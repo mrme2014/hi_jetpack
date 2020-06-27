@@ -1,0 +1,9 @@
+@startuml
+autonumber
+LiveData -> Lifecycle: <font color=red><b>observer(LifecycleOwner owner,Observer<T> observer)\n 向LiveData注册观察者,并observer包装成  LifecycleBoundObserver
+Lifecycle --> LifecycleBoundObserver: <font color=red><b>addObserver(Observer observer)\n<font color=red><b>handleLifecycleEvent(Event event)\n初次注册  ,宿主每次生命周期的变化都会回调<font color=red><b>onStateChanged</b></font>方法
+LifecycleBoundObserver->LifecycleBoundObserver:<font color=red><b>onStateChanged(Event event)\n宿主被销毁事件,则从liveData移除该观察者.流程结束
+LifecycleBoundObserver->LifecycleBoundObserver:\n<font color=red><b>activeStateChanged(boolean newActive)\n如果宿主的状态为started,resumed，则分发最新数据到每个观察者
+LifecycleBoundObserver ->LiveData:<font color=red><b>dispatchingValue(Observer observer)分发数据\n1.如果observer为空,则分发数据个LiveData中存储的所有观察者\n2.如果不为空,则分发数据给该observer
+LiveData->LiveData:<font color=red><b>considerNotify(Observer observer)\n1.如果观察者所在的宿主不活跃了,不分发\n2.observer.version>=LiveData.version则不分发\n3.observer.onStateChanged(data)分发数据
+@enduml

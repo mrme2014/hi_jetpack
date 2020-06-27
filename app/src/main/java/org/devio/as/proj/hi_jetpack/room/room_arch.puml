@@ -1,0 +1,69 @@
+@startuml
+
+object Room实现层{
+   room-compiler编译时处理器+24种注解     '
+}
+
+interface SupportSQLiteOpenHelper{
+   SupportSQLiteDatabase getReadableDatabase();
+   SupportSQLiteDatabase getWritableDatabase();
+}
+
+
+interface SupportSQLiteDatabase{
+      void beginTransaction();
+      boolean inTransaction();
+      Cursor query(SupportSQLiteQuery query);
+      long insert(String table, ContentValues values)
+      int delete(String table, String whereClause);
+      int update(String table,ContentValues values);
+      void execSQL(String sql) throws SQLException;
+}
+
+interface SupportSQLiteStatement{
+    void execute();
+    long executeInsert();
+    int executeUpdateDelete();
+    long simpleQueryForLong();
+}
+class FrameworkSQLiteOpenHelper {
+    SQLiteOpenHelper openHelper来实现数据库创建，打开的能力
+}
+
+class FrameworkSQLiteDatabase {
+    SQLiteDatabase database 来实现数据增删改,事务提交的能力
+}
+
+class FrameworkSQLiteStatement {
+    SQLiteStatement mDelegate 来实现增删改查的能力.
+}
+
+'note left of SupportSQLiteOpenHelper:"接口抽象层" end note
+'note left of FrameworkSQLiteOpenHelper:"接口实现层,依赖于sqlite能力"  end note
+'note left of Room实现层:"Room实现层 注解+ 编译时处理器" end note
+
+Room实现层<--FrameworkSQLiteOpenHelper
+Room实现层<--FrameworkSQLiteDatabase
+Room实现层<--FrameworkSQLiteStatement
+
+FrameworkSQLiteOpenHelper<--SupportSQLiteOpenHelper
+FrameworkSQLiteDatabase<--SupportSQLiteDatabase
+FrameworkSQLiteStatement<--SupportSQLiteStatement
+
+
+component Room实现层(注解+编译时处理器) as c1{
+
+}
+
+component   接口实现层,依赖于sqlite能力     as c2{
+
+}
+
+component 接口抽象层,定义数据库CRUD接口 as c3{
+
+}
+
+
+c1<..c2
+c2<..c3
+@enduml

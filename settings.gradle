@@ -1,0 +1,4 @@
+include ':app'
+rootProject.name = "hi_jetpack"
+include ':nav-compiler'
+include ':nav-annotation'

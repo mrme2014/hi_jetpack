@@ -1,0 +1,13 @@
+@startuml
+Activity -> SavedStateRegistryController: <font color=red><b>onSaveInstanceState(Bundle savedState)\n页面即将被销毁时调用
+activate SavedStateRegistryController
+SavedStateRegistryController --> SavedStateRegistry: <font color=red><b>performSave(Bundle savedState)\n直接转发给SavedStateRegistry
+deactivate SavedStateRegistryController
+activate SavedStateRegistry
+SavedStateRegistry<-->SavedStateHandle:<font color=red><b>performSave(Bundle savedState)\n 遍历所有注册的SavedStateProvider#saveState保存各自的数据\n
+deactivate SavedStateRegistry
+activate SavedStateHandle
+SavedStateRegistry-->SavedStateRegistry:将每个SavedStateHandle返回的bundle\n再汇总到一个总的Bundle中。再把总Bundle存储到Activity的savedState中
+deactivate SavedStateHandle
+activate SavedStateRegistry
+@enduml

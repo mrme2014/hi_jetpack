@@ -1,0 +1,29 @@
+@startuml
+
+component postValue{
+
+}
+
+component setValue{
+
+}
+
+component dispatchingValue{
+
+}
+
+
+component considerNotify{
+
+}
+
+note right of postValue:该方法可以使用在子线程,\n所以这里会使用handler.post先发送到主线程.再分发消息
+note right of setValue:mVersion++,记录当前发送的消息的次数.\n用于和observer的version作比对。防止消息重复
+note right of dispatchingValue:此时会遍历mObservers集合中所有观察者，\n逐一调用considerNotify真正的分发消息
+note right of considerNotify:1.宿主不活跃了不分发,\n2.已经接收过了不分发observer.version>=livedata.version
+
+
+postValue-->setValue
+setValue-->dispatchingValue
+dispatchingValue-->considerNotify
+@enduml

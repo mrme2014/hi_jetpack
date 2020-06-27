@@ -1,0 +1,44 @@
+@startuml
+
+class SavedStateRegistry{
+   SafeIterableMap<String, SavedStateProvider> mComponents
+   Bundle mRestoredState//每个SavedStateHandle的子Bundle会一一的被存储在这里
+}
+
+class SavedStateHandle1{
+   Map<String, Object> mRegular;//这就是存储数据的地方
+
+   Bundle savedState()//数据存储时会将mRegular组装成bundle返回
+}
+
+class SavedStateHandle2{
+   Map<String, Object> mRegular;//这就是存储数据的地方
+
+   Bundle savedState()//数据存储时会将mRegular组装成bundle返回
+}
+
+class SavedStateHandle3{
+   Map<String, Object> mRegular;//这就是存储数据的地方
+
+   Bundle savedState()//数据存储时会将mRegular组装成bundle返回
+}
+
+class ViewModel1 {
+
+}
+
+class ViewModel2 {
+
+}
+
+class ViewModel3 {
+
+}
+SavedStateRegistry-->SavedStateHandle1
+SavedStateRegistry-->SavedStateHandle2
+SavedStateRegistry-->SavedStateHandle3
+
+SavedStateHandle1-->ViewModel1
+SavedStateHandle2-->ViewModel2
+SavedStateHandle3-->ViewModel3
+@enduml

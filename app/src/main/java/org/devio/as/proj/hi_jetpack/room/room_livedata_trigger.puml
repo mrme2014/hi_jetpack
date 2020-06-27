@@ -1,0 +1,10 @@
+@@startuml
+
+cacheDao_impl -> RoomDatabase:<font color=red><b>1.insert,update,delete\n都会触发RoomDatabse.endTransaction
+RoomDatabase-->InvalidationTracker:<font color=red><b>2.endTransaction\n触发InvalidationTracker.refreshVersionsAsync
+InvalidationTracker-->InvalidationTracker:<font color=red><b>3.refreshRunnable\n调用checkUpdatedTable检查改动的表的集合
+InvalidationTracker-->RoomTrackingLiveData:<font color=red><b>4.observer.onInvalidated\n向每个注册进来的observer回调本次事件
+RoomTrackingLiveData-->RoomTrackingLiveData:<font color=red><b>5.invalidateRunnable
+RoomTrackingLiveData->Observer:<font color=red><b>6.refreshRunnable\n通过computeFunction回调出去,加载新的数据，再postvalue发送出去
+
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+SavedStateViewModelFactory -> SavedStateHandleController: <font color=red><b>create(String key,Class modelCalss)\n创建ViewModel实例,并查询它对应的SavedStateHandle对象
+activate SavedStateViewModelFactory
+SavedStateHandleController <--> SavedStateRegistry: <font color=red><b>create(SavedStateRegistry registry, String key)\n查询该ViewModel存储的bundle数据
+deactivate SavedStateViewModelFactory
+activate SavedStateHandleController
+SavedStateHandleController-->SavedStateHandleController :创建SavedStateHandle
+SavedStateHandleController-->SavedStateViewModelFactory:反射创建ViewModel对象，并传递SavedStateHandle对象
+deactivate SavedStateHandleController
+activate SavedStateViewModelFactory
+@enduml

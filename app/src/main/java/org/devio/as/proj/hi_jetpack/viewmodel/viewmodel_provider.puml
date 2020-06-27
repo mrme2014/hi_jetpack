@@ -1,0 +1,30 @@
+@startuml
+
+class ViewModelProvider{
+  ViewModelProvider(ViewModelStoreOwner owner)
+  ViewModelProvider(ViewModelStoreOwner owner, Factory factory)
+  ViewModelProvider(ViewModelStore store,Factory factory)
+}
+
+interface ViewModelProvider.Factory{
+   public <T extends ViewModel> T create(Class<T> modelClass)
+}
+
+class NewInstanceFactory implements ViewModelProvider.Factory{
+     modelClass.newInstance()
+}
+
+class AndroidViewModelFactory implements ViewModelProvider.Factory{
+
+    modelClass.newInstance(mApplication);
+}
+
+class SavedStateViewModelFactory extends ViewModelProvider.Factory{
+
+   public <T extends ViewModel> T create(String key,Class<T> modelClass)
+}
+
+note bottom of NewInstanceFactory: 直接反射构建出viewModel实例
+note bottom of AndroidViewModelFactory: 构建viewmodel时会传递一个Application实例进去\n需要继承自AndroidViewModel
+note bottom of SavedStateViewModelFactory: 重点：构建viewmodel的时候，会传递一个SavedStateHandle对象进去\n可以取代onSaveInstanceState 和 onRestoreInstanceState用来存储和恢复数据\n这种存储方式,即便页面因配置变更、内存不足被系统回收,重建时都可以恢复数据
+@enduml

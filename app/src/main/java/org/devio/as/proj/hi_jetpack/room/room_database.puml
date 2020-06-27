@@ -1,0 +1,11 @@
+@startuml
+Room.databaseBuilder -> RoomDatabase.Builder: <font color=red><b>1.build()\n配置创建数据库的参数
+RoomDatabase.Builder->RoomDatabase.Builder: <font color=red><b>2.DatabaseConfiguration\n 构建数据库参数配置对象
+RoomDatabase.Builder->RoomDatabase.Builder: <font color=red><b>3.getGeneratedImplementation()\n查找数据库编译生成的实现类_impl
+RoomDatabase.Builder->RoomDatabase:<font color=red><b>4.init()\n
+RoomDatabase->Cachedatabase_impl:<font color=red><b>5.createOpenHelper\n这是个抽象方法，具体实现由每个数据库实现类完成
+Cachedatabase_impl->Cachedatabase_impl:<font color=red><b>6.创建RoomOpenHelper\n接收数据库打开事件回调\n仅仅只负责数据库统一升级操作
+Cachedatabase_impl->Cachedatabase_impl:<font color=red><b>7.创建RoomOpenHelper.Delagate\n接收数据库表创建，删除等回调事件\n负责数据库表的创建,表删除，表字段schema校验
+Cachedatabase_impl->Cachedatabase_impl:<font color=red><b>8.构造FrameworkSQLiteOpenHelper对象\n各种事件会回调到上面两个接口中。\n因为它负责连接Room和SqLite，具体的实现它不管
+RoomDatabase<-Cachedatabase_impl:Room数据库的各种操作\n由FrameworkSQLiteOpenHelper通知sqLite完成
+@enduml

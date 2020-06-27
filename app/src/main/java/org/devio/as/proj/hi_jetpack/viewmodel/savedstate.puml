@@ -1,0 +1,35 @@
+@startuml
+
+class Activity implements SavedStateRegistryOwner{
+
+       SavedStateRegistry getSavedStateRegistry()
+}
+
+class  SavedStateRegistryController{
+  public static SavedStateRegistry create();
+  public void performRestore(Bundle savedState)
+  public void performSave(Bundle savedState)
+}
+
+class SavedStateRegistry{
+   SafeIterableMap<String, SavedStateProvider> mComponents
+   public void performRestore(Bundle savedState)
+   public void performSave(Bundle savedState)
+   public Bundle consumeRestoredStateForKey(String key)//根据key查询该viewmodel中存储的数据
+}
+
+
+class SavedStateHandle {
+    final Map<String, Object> mRegular
+    final SavedStateProvider mSavedStateProvider;
+}
+
+Activity..>SavedStateRegistryController:委托创建SavedStateRegistry对象
+SavedStateRegistryController..>SavedStateRegistry:存储、恢复数据
+SavedStateRegistry<..>SavedStateHandle:单一viewmodel中的数据存储、恢复
+
+note left of SavedStateRegistryOwner:接口,用于获取SavedStateRegistry对象
+note left of SavedStateRegistryController:1.SavedStateRegistry的控制器\n2.与Activity,Fragment建立联系\n3.用于创建SavedStateRegistry
+note left of SavedStateRegistry:数据存储中心,用于存储、恢复一个ViewModel中的bundle数据
+note left of SavedStateHandle:每个ViewModel对应一个SavedStateHandle。用于存储和恢复数据
+@enduml

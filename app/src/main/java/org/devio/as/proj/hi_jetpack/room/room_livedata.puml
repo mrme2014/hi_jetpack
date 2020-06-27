@@ -1,0 +1,8 @@
+@@startuml
+cacheDao_Impl->InvalidationTracker:<font color=red><b>1.query2():LiveData<Cache>\n
+InvalidationTracker -> RoomTrackingLiveData:<font color=red><b>2.createLiveData
+RoomTrackingLiveData-->RoomTrackingLiveData:<font color=red><b>3.创建InvalidationTracker.Observer\n用以接收表数据变更的事件回调，会触发refreshRunnable
+RoomTrackingLiveData-->RoomTrackingLiveData:<font color=red><b>4.onActive\n第一次向LiveData注册observer时会触发，进而触发refreshRunnable加载首次数据
+RoomTrackingLiveData->Observer:<font color=red><b>5.refreshRunnable\n向InvalidationTracker注册第三步创建的observer.\n通过computeFunction回调出去,加载最新的数据，再postValue发送出去
+
+@enduml

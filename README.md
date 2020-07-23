@@ -1,4 +1,5 @@
 # hi_jetpack
+- 大力推荐[移动端架构师成长体系课](http://class.imooc.com/sale/mobilearchitect)
 - 本仓库是Jetpack专栏课程源码，专栏详情请移步[慕课网](https://class.imooc.com/sale/mobilearchitect)
 
 - 项目中的 .puml文件是组件的架构图示，详情请参考[AndroidStduio with plantUml](https://blog.csdn.net/u013831257/article/details/50118461)
